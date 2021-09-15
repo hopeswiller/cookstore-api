@@ -2,6 +2,7 @@
   "name": "cookstore",
   "version": "1.0.0",
   "description": "",
+  "git": "https://github.com/hopeswiller/cookstore.git",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
