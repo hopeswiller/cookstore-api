@@ -1,0 +1,16 @@
+{
+  "name": "cookstore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hopeswiller_",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "winston": "^3.3.3"
+  }
+}
