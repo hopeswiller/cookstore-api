@@ -15,6 +15,9 @@ users.get('/', async (req, res) => {
 
     res.status(200).send({
         "count": data.length,
+        "page" :page,
+        "offset": offset,
+        "limit": limit,
         "rows": data
     })
 });
