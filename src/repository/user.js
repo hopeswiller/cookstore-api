@@ -7,7 +7,7 @@ class User {
     }
 
     static async getAllUsers(limit, offset) {
-        let sql = `SELECT id,name,username from users LIMIT $1 OFFSET $2`;
+        let sql = `SELECT id,name,username,created_date,updated_date,last_login from users LIMIT $1 OFFSET $2`;
         let result;
 
         // sql += ` LIMIT $1 OFFSET $2`;
@@ -17,21 +17,21 @@ class User {
     }
 
     static async getUserById(userId) {
-        const sql = `SELECT id,name,username from users WHERE id = $1`;
+        const sql = `SELECT id,name,username,created_date,updated_date from users WHERE id = $1`;
         let result = await db.query(sql, [userId]);
         return result
     }
 
     static async getUserByUsername(username) {
-        const sql = `SELECT id,name,username from users WHERE username = $1`;
+        const sql = `SELECT id,name,username,password,created_date,updated_date from users WHERE username = $1`;
         logger.debug(sql)
         let result = await db.query(sql, [username]);
         return result
     }
 
     static async createUser(data) {
-        const sql = `INSERT INTO users (name,username,password,created_date)
-                    VALUES ($1, $2, $3, now()) RETURNING id;`
+        const sql = `INSERT INTO users (name,username,password,created_date,updated_date)
+                    VALUES ($1, $2, $3, now(),now()) RETURNING id;`
 
         logger.debug(sql)
 

@@ -1,5 +1,6 @@
 const logger = require('../utils/logger');
 const db = require('../utils/db');
+const { off } = require('npmlog');
 
 
 class Recipe {
@@ -11,38 +12,35 @@ class Recipe {
         let param_count = 0;
         let params = []
 
-        logger.debug(`createdAt:${createdAt}`)
-        logger.debug(`name:${name}`)
         if (name) {
             param_count++;
             sql += ` AND lower(name) = $${param_count}`
-            // (index,0,item)
-            params.slice(param_count - 1, 0, name)
+            params.push(name.trim().toLowerCase())
         }
         if (createdAt) {
             param_count++
-            sql += ` AND created_date::date = trim($${param_count})`
-
-            params.slice(param_count - 1, 0, createdAt)
+            sql += ` AND created_date::date = $${param_count}`
+            params.push(createdAt.trim())
         }
 
-        // sql += ''
+        sql += ` LIMIT $${param_count+1} OFFSET $${param_count+2}`
+        params.push(limit,offset)
 
-        logger.debug(`params ${params}`)
-        logger.debug(`param_count: ${param_count}`)
         logger.debug(sql)
+        const rows = await db.query(sql,params)
 
-        // const rows = await db.query(sql)
-
-        // return rows
+        return rows
     }
 
-    static async getRecipeById() {
+    static async getRecipeById(id) {
+        let sql = `
+            SELECT id,name,description,instructions,created_date,updated_date
+            FROM recipes WHERE id = $1`
 
-    }
+        logger.debug(sql)
+        const rows = await db.query(sql,[id])
 
-    static async getRecipeByName() {
-
+        return rows
     }
 }
 
