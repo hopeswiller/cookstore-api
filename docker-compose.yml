@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  cookstore:
+    image: cookstore-api
+    container_name: cookstore
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    environment:
+      DB_HOST: db
+      DB_NAME: cookstore
+      DB_USER: cookstore
+      DB_PASSWD: cookstore
+      DB_PORT: 5432
+      LOG_LEVEL: ${LOG_LEVEL}
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    command: npm run dev
+
+  db:
+    image: postgres:alpine
+    container_name: cookstore-db
+    ports: 
+      - 6432:5432
+    environment:
+      POSTGRES_DB: cookstore
+      POSTGRES_USER: cookstore
+      POSTGRES_PASSWORD: cookstore
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./data:/docker-entrypoint-initdb.d/
+
+volumes:
+  pg_data:

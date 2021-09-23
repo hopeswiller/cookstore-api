@@ -1,20 +1,18 @@
 const app = require('express')();
-const logger = require('./src/utils/logger');
-const mountRoutes = require('./src/utils/router');
-const figlet = require('./src/utils/figlet');
-const renderSwagger = require('./src/docs/swagger');
+const logger = require('./utils/logger');
+const mountRoutes = require('./utils/router');
+const figlet = require('./utils/figlet');
+const renderSwagger = require('./docs/swagger');
 const passport = require('passport');
-const dotenv = require('dotenv');
-dotenv.config()
+require('dotenv').config();
 
 
 // middlewares
 app.use(passport.initialize());
 app.use(passport.session());
-require('./src/utils/validation').authenticate(passport);
+require('./utils/validation').authenticate(passport);
 mountRoutes(app)
 renderSwagger(app);
-
 
 
 
@@ -42,3 +40,10 @@ process.on('uncaughtException', err => {
     process.exit(1);
 });
 
+process.on('SIGINT', function onSigint() {
+  process.exit();
+});
+
+process.on('SIGTERM', function onSigterm() {
+  process.exit();
+});

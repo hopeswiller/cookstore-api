@@ -1,0 +1,15 @@
+# ---------- Base ------------
+FROM node:16-alpine3.14 as base
+
+LABEL maintainer="hopeswiller_ <davidba941@gmail.com>"
+LABEL description="CookStore API in dev mode"
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY ./src ./src
+
+USER node
+EXPOSE 5000
