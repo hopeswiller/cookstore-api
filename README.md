@@ -25,14 +25,14 @@ Setup via Docker which is recommended and simpler.
 > Update docker to latest version
 
 - #### Create an .env file with the following vars
-```
+``` 
     PORT=
-    LOG_LEVEL=
+    LOG_LEVEL=debug
     DB_HOST=
-    DB_NAME=
-    DB_USER=
-    DB_PASSWD=
-    DB_PORT=
+    DB_NAME=cookstore
+    DB_USER=postgres
+    DB_PASSWD=1
+    DB_PORT=5432
 ```
 - #### Run the command to start server in dev mode respectively
 
